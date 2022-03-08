@@ -10,10 +10,15 @@ public class PipeSpawnerScript : MonoBehaviour
     public float yMin;
     public float yMax;
     float time;
+    BirdMovement birdMovement;
     void Start()
     {
-       // PipeSpawner();
-        InvokeRepeating("PipeSpawner",2f,2f);
+        birdMovement = GameObject.Find("Player").GetComponent<BirdMovement>();
+        // PipeSpawner();
+        if (birdMovement.isGameOver == false)
+        {
+            InvokeRepeating("PipeSpawner", 2f, 2f);
+        }
     }
 
     private void PipeSpawner()

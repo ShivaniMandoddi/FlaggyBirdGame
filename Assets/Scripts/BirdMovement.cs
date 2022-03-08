@@ -12,7 +12,9 @@ public class BirdMovement : MonoBehaviour
     Rigidbody2D rb;
     float time;
     public Text scoreText;
+    public Text gameOver;
     public int angle, minAngle, maxAngle;
+    public bool isGameOver=false;
    // public GameObject upperPipe;
     //public GameObject lowerPipe;
     void Start()
@@ -29,7 +31,8 @@ public class BirdMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             //Bird movement will start after left click mouse button
-            BirdFlapJump();
+            if(isGameOver==false)
+                BirdFlapJump();
             //transform.Translate(Vector2.right * 4 * Time.deltaTime);
         }
         //float xPosition = UnityEngine.Random.Range(1f, 4f);
@@ -71,13 +74,18 @@ public class BirdMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-         Debug.Log("Game Over");
-        
+       if(collision.gameObject.tag=="Pipe" || collision.gameObject.tag=="Ground")
+        {
+            Debug.Log("Game Over");
+            isGameOver = true;
+            gameOver.text = "Game Over!!";
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         score=score+10;
         Debug.Log("Score:" + score);
         scoreText.text = score.ToString();
+       
     }
 }
