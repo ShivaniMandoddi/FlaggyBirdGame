@@ -2,21 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BirdMovement : MonoBehaviour
 {
     // Start is called before the first frame update
     public float birdSpeed;
+    public float score;
     Rigidbody2D rb;
     float time;
+    public Text scoreText;
     public int angle, minAngle, maxAngle;
-    public GameObject upperPipe;
-    public GameObject lowerPipe;
+   // public GameObject upperPipe;
+    //public GameObject lowerPipe;
     void Start()
     {
        gameObject.AddComponent<Rigidbody2D>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
+       
     }
 
     // Update is called once per frame
@@ -29,7 +33,7 @@ public class BirdMovement : MonoBehaviour
             //transform.Translate(Vector2.right * 4 * Time.deltaTime);
         }
         //float xPosition = UnityEngine.Random.Range(1f, 4f);
-        float yPosition = UnityEngine.Random.Range(3.5f, 6.0f);
+        /*float yPosition = UnityEngine.Random.Range(3.5f, 6.0f);
         
         time = time + Time.deltaTime;
         if (time > 3f)
@@ -37,7 +41,7 @@ public class BirdMovement : MonoBehaviour
             Instantiate(lowerPipe, new Vector2(2, -1.88f), Quaternion.identity);
             Instantiate(upperPipe, new Vector2(2, yPosition), Quaternion.identity);
             time = 0f;
-        }
+        }*/
         BirdRotation();
     }
 
@@ -67,9 +71,13 @@ public class BirdMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       if(collision.gameObject.tag=="Pipe")
-        {
-            Debug.Log("Game Over");
-        }
+         Debug.Log("Game Over");
+        
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        score=score+10;
+        Debug.Log("Score:" + score);
+        scoreText.text = score.ToString();
     }
 }
